@@ -11,7 +11,7 @@ model country {
   countryName String    @id @map("country_name") @db.VarChar(30)
   language    String    @db.VarChar(30)
   region      String    @db.VarChar(30)
-  student     student[]
+  student     student[] 
 
   @@map("country")
 }
