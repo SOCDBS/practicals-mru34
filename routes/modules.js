@@ -21,6 +21,4 @@ router.put('/:code', modulesController.updateByCode);
 
 router.get('/', modulesController.retrieveAll);
 
-router.post('/table', modulesController.initTable);
-
 module.exports = router;

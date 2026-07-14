@@ -15,6 +15,9 @@
         "dev": "nodemon server.js",
         "eslint": "eslint ."
     },
+    "prisma": {
+        "schema": "./prisma/schema.prisma"
+    },
     "devDependencies": {
         "eslint": "^8.38.0",
         "eslint-config-airbnb-base": "^15.0.0",
