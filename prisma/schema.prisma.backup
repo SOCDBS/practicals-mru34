@@ -1,6 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions", "relationJoins"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -104,10 +103,10 @@ model staffBackup {
   pay              Decimal? @db.Decimal(7, 2)
   allowance        Decimal? @db.Decimal(7, 2)
   hourlyRate       Decimal? @map("hourly_rate") @db.Decimal(7, 2)
-  gender           String   @db.Char(1)
-  citizenship      String   @db.VarChar(10)
-  joinYr           Int      @map("join_yr")
-  deptCode         String   @map("dept_code") @db.VarChar(5)
+  gender            String   @db.Char(1)
+  citizenship       String   @db.VarChar(10)
+  joinYr            Int      @map("join_yr")
+  deptCode          String   @map("dept_code") @db.VarChar(5)
   typeOfEmployment String   @map("type_of_employment") @db.VarChar(2)
   highestQln       String   @map("highest_qln") @db.VarChar(10)
   designation      String   @db.VarChar(20)
