@@ -1,6 +1,32 @@
 /* eslint-disable no-console */
+const path = require('path');
 const { PrismaClient } = require('@prisma/client');
 const util = require('util');
+
+require('dotenv').config({ path: path.resolve(__dirname, '..', '.env') });
+
+function buildDatabaseUrlFromEnv() {
+    const {
+        DB_USER,
+        DB_PASSWORD,
+        DB_HOST,
+        DB_DATABASE,
+        DB_PORT = '5432',
+    } = process.env;
+
+    if (DB_USER && DB_PASSWORD && DB_HOST && DB_DATABASE) {
+        process.env.DATABASE_URL = `postgresql://${encodeURIComponent(DB_USER)}:${encodeURIComponent(DB_PASSWORD)}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?schema=public`;
+    }
+}
+
+if (!process.env.DATABASE_URL) {
+    buildDatabaseUrlFromEnv();
+}
+
+if (!process.env.DATABASE_URL) {
+    console.error('Missing database configuration. Set DATABASE_URL or DB_USER/DB_PASSWORD/DB_HOST/DB_DATABASE in your environment or .env file before running this script.');
+    process.exit(1);
+}
 
 const prisma = new PrismaClient();
 
