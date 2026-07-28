@@ -18,15 +18,35 @@ model country {
 }
 
 model course {
-  crseCode   String     @id @map("crse_code") @db.VarChar(5)
-  crseName   String     @map("crse_name") @db.VarChar(100)
-  offeredBy  String     @map("offered_by") @db.VarChar(5)
-  crseFee    Decimal    @map("crse_fee") @db.Decimal(7, 2)
-  labFee     Decimal?   @map("lab_fee") @db.Decimal(7, 2)
-  department department @relation(fields: [offeredBy], references: [deptCode], onDelete: NoAction, onUpdate: NoAction, map: "course_offered_by_fk")
-  student    student[]
+  crseCode    String     @id @map("crse_code") @db.VarChar(5)
+  crseName    String     @map("crse_name") @db.VarChar(100)
+  offeredBy   String     @map("offered_by") @db.VarChar(5)
+  crseFee     Decimal    @map("crse_fee") @db.Decimal(7, 2)
+  labFee      Decimal?   @map("lab_fee") @db.Decimal(7, 2)
+  maxCrseSize Int        @default(100) @map("max_crse_size")
+  department  department @relation(fields: [offeredBy], references: [deptCode], onDelete: NoAction, onUpdate: NoAction, map: "course_offered_by_fk")
+  student     student[]
 
   @@map("course")
+}
+
+model paymentFeeType {
+  feeType        Int              @id @default(autoincrement()) @map("fee_type")
+  feeName        String           @map("fee_name") @db.VarChar(20)
+  paymentHistory paymentHistory[]
+
+  @@map("payment_fee_type")
+}
+
+model paymentHistory {
+  paymentId      Int            @id @default(autoincrement()) @map("payment_id")
+  payeeNo        String         @map("payee_no") @db.Char(4)
+  paymentDate    DateTime       @map("payment_date") @db.Date
+  amountPaid     Decimal        @map("amount_paid") @db.Decimal(7, 2)
+  feeType        Int            @map("fee_type")
+  paymentFeeType paymentFeeType @relation(fields: [feeType], references: [feeType], onDelete: NoAction, onUpdate: NoAction, map: "payment_history_fee_type_fk")
+
+  @@map("payment_history")
 }
 
 model department {
